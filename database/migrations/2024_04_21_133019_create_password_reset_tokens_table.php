@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periodo_evaluaciones', function (Blueprint $table) {
-            $table->integer('id')->primary();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periodo_evaluaciones');
+        Schema::dropIfExists('password_reset_tokens');
     }
 };

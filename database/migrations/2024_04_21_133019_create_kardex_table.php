@@ -17,9 +17,9 @@ return new class extends Migration
             $table->integer('id', true);
             $table->integer('id_alumno')->index('id_alumno');
             $table->integer('id_asignatura')->index('id_asignatura');
-            $table->tinyInteger('cal_primer_momento');
-            $table->tinyInteger('cal_segundo_momento');
-            $table->tinyInteger('cal_tercer_momento');
+            $table->tinyInteger('cal_primer_momento')->nullable();
+            $table->tinyInteger('cal_segundo_momento')->nullable();
+            $table->tinyInteger('cal_tercer_momento')->nullable();
 
             $table->primary(['id', 'id_alumno', 'id_asignatura']);
         });

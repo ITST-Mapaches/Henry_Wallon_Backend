@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('nombre', 20);
-            $table->string('ap_paterno', 20);
-            $table->string('ap_materno', 20);
+            $table->string('nombre', 40);
+            $table->string('ap_paterno', 40);
+            $table->string('ap_materno', 40);
             $table->date('nacimiento');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
