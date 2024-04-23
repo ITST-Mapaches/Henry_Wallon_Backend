@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kardex', function (Blueprint $table) {
+        Schema::create('momentos', function (Blueprint $table) {
             $table->integer('id', true);
             $table->integer('id_alumno')->index('id_alumno');
             $table->integer('id_asignatura')->index('id_asignatura');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kardex');
+        Schema::dropIfExists('momentos');
     }
 };

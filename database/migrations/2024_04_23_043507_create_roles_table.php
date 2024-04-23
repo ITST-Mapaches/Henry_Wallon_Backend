@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('grupos', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->char('prefijo', 1)->unique('prefijo');
-            $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->string('rol', 20)->unique('rol');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grupos');
+        Schema::dropIfExists('roles');
     }
 };

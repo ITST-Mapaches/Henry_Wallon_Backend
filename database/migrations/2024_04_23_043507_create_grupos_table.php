@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tutores', function (Blueprint $table) {
+        Schema::create('grupos', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('id_persona')->index('id_persona');
-            $table->string('ocupacion', 50);
-            $table->integer('id_admin')->index('id_admin');
-
-            $table->primary(['id', 'id_persona', 'id_admin']);
+            $table->char('prefijo', 1)->unique('prefijo');
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tutores');
+        Schema::dropIfExists('grupos');
     }
 };

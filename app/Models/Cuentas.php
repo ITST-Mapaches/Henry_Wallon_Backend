@@ -19,7 +19,6 @@ class Cuentas extends Authenticatable
     protected $primaryKey = "id";
 
     protected $fillable = [
-        'url_image',
         'telefono',
         'correo',
         'contrasena',
@@ -28,16 +27,10 @@ class Cuentas extends Authenticatable
         'id_rol',
     ];
 
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
+            'contrasena' => 'hashed',
         ];
     }
 }

@@ -15,15 +15,13 @@ return new class extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->integer('id_persona')->index('id_persona');
+            $table->integer('id_usuario')->index('id_usuario');
             $table->string('num_control', 15)->unique('num_control');
-            $table->integer('id_tutor')->index('id_tutor');
+            $table->integer('id_usuario_tutor')->index('id_usuario_tutor');
             $table->integer('id_periodo')->index('id_periodo');
             $table->integer('id_grupo')->index('id_grupo');
-            $table->integer('id_admin')->index('id_admin');
-            $table->integer('id_generacion')->index('id_generacion');
 
-            $table->primary(['id', 'id_tutor', 'id_periodo', 'id_grupo', 'id_admin', 'id_generacion']);
+            $table->primary(['id', 'id_usuario', 'id_usuario_tutor', 'id_periodo', 'id_grupo']);
         });
     }
 

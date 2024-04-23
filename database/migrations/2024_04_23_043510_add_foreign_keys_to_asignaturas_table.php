@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+        Schema::table('asignaturas', function (Blueprint $table) {
+            $table->foreign(['id_periodo'], 'asignaturas_ibfk_1')->references(['id'])->on('periodos_escolares')->onUpdate('no action')->onDelete('no action');
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_reset_tokens');
+        Schema::table('asignaturas', function (Blueprint $table) {
+            $table->dropForeign('asignaturas_ibfk_1');
+        });
     }
 };

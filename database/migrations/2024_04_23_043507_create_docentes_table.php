@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sexos', function (Blueprint $table) {
+        Schema::create('docentes', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('nombre', 12)->unique('nombre');
-            $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->string('cedula_prof', 20)->unique('cedula_prof');
+            $table->integer('id_usuario')->index('id_usuario');
+
+            $table->primary(['id', 'id_usuario']);
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sexos');
+        Schema::dropIfExists('docentes');
     }
 };
