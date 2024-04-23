@@ -17,6 +17,6 @@ class Docentes extends Model
 
     protected $fillable = [
         'cedula_prof',
-        'id_persona',
+        'id_usuario',
     ];
 }

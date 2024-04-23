@@ -16,12 +16,10 @@ class Alumnos extends Model
     protected $primaryKey = "id";
 
     protected $fillable = [
-        'id_persona',
+        'id_usuario',
         'num_control',
-        'id_tutor',
+        'id_usuario_tutor',
         'id_periodo',
         'id_grupo',
-        'id_admin',
-        'id_generacion',
     ];
 }

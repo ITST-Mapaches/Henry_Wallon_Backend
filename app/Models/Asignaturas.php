@@ -16,8 +16,9 @@ class Asignaturas extends Model
     protected $fillable = [
         'clave',
         'nombre',
-        'competencia',
+        'objetivo',
         'id_periodo',
-        'id_admin',
+        'estatus',
+        'calificacion_aprobatoria',
     ];
 }

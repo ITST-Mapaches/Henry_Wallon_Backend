@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Personas extends Model
+class Usuarios extends Model
 {
     use HasFactory;
 
-    protected $table = 'personas';
+    protected $table = 'usuarios';
 
     protected $primaryKey = "id";
 
@@ -18,7 +18,11 @@ class Personas extends Model
         'ap_paterno',
         'ap_materno',
         'nacimiento',
+        'telefono',
+        'nombre_usuario',
+        'contrasena',
+        'activo',
         'id_sexo',
-        'id_admin',
+        'id_rol',
     ];
 }
