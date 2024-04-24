@@ -19,19 +19,15 @@ class AsignaturasFactory extends Factory
      */
     public function definition(): array
     {
-        $admins = DB::table('personas')
-            ->join('cuentas', 'personas.id', '=', 'cuentas.id_persona')
-            ->join('roles', 'cuentas.id_rol', '=', 'roles.id')
-            ->where('roles.rol', 'administrador')
-            ->pluck('personas.id')
-            ->toArray();
+
 
         return [
             'clave' => substr(uniqid(), 0, 10),
             'nombre' => fake()->name,
-            'competencia' => fake()->paragraph(),
+            'objetivo' => fake()->paragraph(),
             'id_periodo' => PeriodosEscolares::inRandomOrder()->first()->id,
-            'id_admin' => fake()->randomElement($admins)
+            'estatus' => fake()->numberBetween(0, 1),
+            'calificacion_aprobatoria' => 7,
         ];
     }
 }

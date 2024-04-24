@@ -2,15 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\Personas;
-use App\Models\Roles;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Roles;
+use App\Models\Sexos;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cuentas>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Usuarios>
  */
-class CuentasFactory extends Factory
+class UsuariosFactory extends Factory
 {
     protected static ?string $password;
 
@@ -22,13 +23,17 @@ class CuentasFactory extends Factory
     public function definition(): array
     {
         return [
-            'url_image' => fake()->word,
+            'nombre' => fake()->name,
+            'ap_paterno' => fake()->lastName(),
+            'ap_materno' => fake()->lastName(),
+            'nacimiento' => fake()->date(),
             'telefono' => substr(uniqid(), 0, 12),
-            'correo' => fake()->unique()->safeEmail(),
+            'nombre_usuario' => fake()->unique()->userName(),
             'contrasena' => static::$password ??= Hash::make('password'),
             'activo' => fake()->numberBetween(0, 1),
-            'id_persona' => Personas::inRandomOrder()->first()->id,
+            'id_sexo' => Sexos::inRandomOrder()->first()->id,
             'id_rol' => Roles::inRandomOrder()->first()->id,
+            'remember_token' => Str::random(10),
         ];
     }
 }

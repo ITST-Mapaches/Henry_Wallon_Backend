@@ -22,30 +22,24 @@ class AlumnosFactory extends Factory
      */
     public function definition(): array
     {
-        $personas = DB::table('personas')
-            ->join('cuentas', 'personas.id', '=', 'cuentas.id_persona')
-            ->join('roles', 'cuentas.id_rol', '=', 'roles.id')
+        $usuarios = DB::table('usuarios')
+            ->join('roles', 'usuarios.id_rol', '=', 'roles.id')
             ->where('roles.rol', 'alumno')
-            ->pluck('personas.id')
+            ->pluck('usuarios.id')
             ->toArray();
 
-        $admins = DB::table('personas')
-            ->join('cuentas', 'personas.id', '=', 'cuentas.id_persona')
-            ->join('roles', 'cuentas.id_rol', '=', 'roles.id')
-            ->where('roles.rol', 'administrador')
-            ->pluck('personas.id')
+        $tutores = DB::table('usuarios')
+            ->join('roles', 'usuarios.id_rol', '=', 'roles.id')
+            ->where('roles.rol', 'tutor')
+            ->pluck('usuarios.id')
             ->toArray();
-
-
 
         return [
-            'id_persona' => fake()->randomElement($personas),
+            'id_usuario' => fake()->randomElement($usuarios),
             'num_control' => substr(uniqid(), 0, 15),
-            'id_tutor' => Tutores::inRandomOrder()->first()->id,
+            'id_usuario_tutor' => fake()->randomElement($tutores),
             'id_periodo' => PeriodosEscolares::inRandomOrder()->first()->id,
             'id_grupo' => Grupos::inRandomOrder()->first()->id,
-            'id_admin' => fake()->randomElement($admins),
-            'id_generacion' => Generaciones::inRandomOrder()->first()->id,
         ];
     }
 }

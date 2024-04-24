@@ -18,18 +18,16 @@ class DocentesFactory extends Factory
     public function definition(): array
     {
 
-        // Obtener los IDs de las personas que tienen el rol "docente"
-        $idPersonasDocentes = DB::table('personas')
-            ->join('cuentas', 'personas.id', '=', 'cuentas.id_persona')
-            ->join('roles', 'cuentas.id_rol', '=', 'roles.id')
+        // Obtener los IDs de los usuarios que tienen el rol "docente"
+        $docentes = DB::table('usuarios')
+            ->join('roles', 'usuarios.id_rol', '=', 'roles.id')
             ->where('roles.rol', 'docente')
-            ->pluck('personas.id')
+            ->pluck('usuarios.id')
             ->toArray();
 
         return [
             'cedula_prof' => substr(uniqid(), 0, 20),
-            'id_persona' => fake()->randomElement($idPersonasDocentes),
-            'id_admin' => 1,
+            'id_usuario' => fake()->randomElement($docentes),
         ];
     }
 }

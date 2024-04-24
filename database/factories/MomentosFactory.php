@@ -7,9 +7,9 @@ use App\Models\Asignaturas;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Kardex>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Momentos>
  */
-class KardexFactory extends Factory
+class MomentosFactory extends Factory
 {
     /**
      * Define the model's default state.
