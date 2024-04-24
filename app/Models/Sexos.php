@@ -9,6 +9,8 @@ class Sexos extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'sexos';
 
     protected $primaryKey = "id";

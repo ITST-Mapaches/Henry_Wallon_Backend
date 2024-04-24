@@ -9,6 +9,8 @@ class Asignaturas extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'asignaturas';
 
     protected $primaryKey = "id";

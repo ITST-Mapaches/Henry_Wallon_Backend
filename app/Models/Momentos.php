@@ -11,7 +11,7 @@ class Momentos extends Model
 
     public $timestamps = false;
 
-    protected $table = 'kardex';
+    protected $table = 'Momentos';
 
     protected $primaryKey = "id";
 

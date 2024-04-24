@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
-class Usuarios extends Model
+class Usuarios extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'usuarios';
 
@@ -24,5 +26,13 @@ class Usuarios extends Model
         'activo',
         'id_sexo',
         'id_rol',
+        'remember_token'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'contrasena' => 'hashed',
+        ];
+    }
 }
