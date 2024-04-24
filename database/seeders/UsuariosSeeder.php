@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cuentas;
+use App\Models\Usuarios;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CuentasSeeder extends Seeder
+class UsuariosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Cuentas::factory(100)->create();
+        Usuarios::factory(20)->create();
     }
 }

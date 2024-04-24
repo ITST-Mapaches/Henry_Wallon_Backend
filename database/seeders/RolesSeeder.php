@@ -14,19 +14,19 @@ class RolesSeeder extends Seeder
     public function run(): void
     {
         Roles::factory()->create([
-            'rol' => 'Administrador'
+            'rol' => 'Administrador',
         ]);
 
         Roles::factory()->create([
-            'rol' => 'Docente'
+            'rol' => 'Docente',
         ]);
 
         Roles::factory()->create([
-            'rol' => 'Alumno'
+            'rol' => 'Alumno',
         ]);
 
         Roles::factory()->create([
-            'rol' => 'Tutor'
+            'rol' => 'Tutor',
         ]);
     }
 }

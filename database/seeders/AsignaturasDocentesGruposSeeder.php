@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Kardex;
+use App\Models\AsignaturasDocentesGrupos;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class KardexSeeder extends Seeder
+class AsignaturasDocentesGruposSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Kardex::factory(15)->create();
+        AsignaturasDocentesGrupos::factory(30)->create();
     }
 }
