@@ -26,7 +26,6 @@ class AsignaturasFactory extends Factory
             'nombre' => fake()->name,
             'objetivo' => fake()->paragraph(),
             'id_periodo' => PeriodosEscolares::inRandomOrder()->first()->id,
-            'estatus' => fake()->numberBetween(0, 1),
             'calificacion_aprobatoria' => 7,
         ];
     }

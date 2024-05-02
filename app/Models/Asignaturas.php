@@ -20,7 +20,6 @@ class Asignaturas extends Model
         'nombre',
         'objetivo',
         'id_periodo',
-        'estatus',
         'calificacion_aprobatoria',
     ];
 }

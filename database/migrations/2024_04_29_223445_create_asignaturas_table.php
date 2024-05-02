@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nombre', 50)->unique('nombre');
             $table->text('objetivo');
             $table->integer('id_periodo')->index('id_periodo');
-            $table->boolean('estatus')->default(true);
             $table->tinyInteger('calificacion_aprobatoria');
 
             $table->primary(['id', 'id_periodo']);
