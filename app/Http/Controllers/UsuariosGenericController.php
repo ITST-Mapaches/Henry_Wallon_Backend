@@ -122,6 +122,38 @@ class UsuariosGenericController
         ], 200);
     }
 
+    // | funcion para obtener a los docentes
+    public function getDocentes()
+    {
+        //hacemos un select all de la vista
+        // $usuarios = UsuariosViewModel::where('rol', 'Docente')->select('id', 'name')->get();
+        $usuarios = DB::table('docentes as d')
+        ->join('usuarios_info_view as u', 'd.id_usuario', '=', 'u.id')
+        ->select('u.id', 'd.id as id_docente', 'u.name')
+        ->get();
+
+
+        //si usuarios está vacío
+        if (empty($usuarios) || count($usuarios) <= 0) {
+            //retorna una respuesta con detalles en caso de que no haya datos
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => 'No se han encontrado registros',
+                    'data' => []
+                ],
+                200
+            );
+        }
+
+        //en caso de que si existan datos
+        return response([
+            'status' => 200,
+            'message' => 'Registros encontrados exitosamente',
+            'data' => $usuarios
+        ], 200);
+    }
+
 
     //| funcion para eliminar un usuario, recibe el id del usuario
     public function destroy($id)
