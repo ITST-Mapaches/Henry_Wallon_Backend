@@ -60,6 +60,10 @@ Route::get('roles', [RolesController::class, 'show']);
 
 // | periodos
 Route::get('periodos', [PeriodosEscolaresController::class, 'show']);
+Route::get('getPeriodo/{id}', [PeriodosEscolaresController::class, 'getPeriodo']);
+Route::post('periodos', [PeriodosEscolaresController::class, 'insert']);
+Route::put('periodos/{id}', [PeriodosEscolaresController::class, 'update']);
+Route::delete('periodos/{id}', [PeriodosEscolaresController::class, 'destroy']);
 
 // | grupos
 Route::get('grupos', [GruposController::class, 'show']);
