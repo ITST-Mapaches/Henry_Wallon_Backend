@@ -35,7 +35,7 @@ Route::put('docentes/{id}', [DocentesController::class, 'update']);
 
 //| alumnos
 Route::post('alumnos', [AlumnosController::class, 'insert']);
-Route::put('alumnos/{id}', [AlumnosController::class, 'update']);   
+Route::put('alumnos/{id}', [AlumnosController::class, 'update']);
 
 // |usuarios
 Route::post('usuarios', [UsuariosController::class, 'insert']);
@@ -63,6 +63,9 @@ Route::get('periodos', [PeriodosEscolaresController::class, 'show']);
 
 // | grupos
 Route::get('grupos', [GruposController::class, 'show']);
+Route::post('grupos', [GruposController::class, 'insert']);
+Route::put('grupos/{id}', [GruposController::class, 'update']);
+Route::delete('grupos/{id}', [GruposController::class, 'destroy']);
 
 
 Route::get('momentos', [MomentosController::class, 'show']);
