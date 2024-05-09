@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlumnosController;
 use App\Http\Controllers\AsignaturasController;
 use App\Http\Controllers\AsignaturasDocentesGruposController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocentesController;
 use App\Http\Controllers\GruposController;
 use App\Http\Controllers\MomentosController;
@@ -19,59 +20,75 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
+// !ruta para login
+Route::post('login', [AuthController::class, 'login']);
+
+// !proteccion de rutas con autenticacion
+Route::middleware(['auth:sanctum'])->group(
+    function () {
+        //| informacion general de usuarios usando vista
+        Route::get('getUsuarios', [UsuariosGenericController::class, 'show'])->middleware('restrictRole:Administrador');
+        Route::get('getUsuario/{id}', [UsuariosGenericController::class, 'getUser'])->middleware('restrictRole:Administrador');
+        Route::get('getUsuarios/tutores', [UsuariosGenericController::class, 'getTutores'])->middleware('restrictRole:Administrador');
+        Route::get('getUsuarios/docentes', [UsuariosGenericController::class, 'getDocentes'])->middleware('restrictRole:Administrador');
+        Route::delete('deleteUser/{idUser}', [UsuariosGenericController::class, 'destroy'])->middleware('restrictRole:Administrador');
 
 
-//| informacion general de usuarios usando vista
-Route::get('getUsuarios', [UsuariosGenericController::class, 'show']);
-Route::get('getUsuario/{id}', [UsuariosGenericController::class, 'getUser']);
-Route::get('getUsuarios/tutores', [UsuariosGenericController::class, 'getTutores']);
-Route::get('getUsuarios/docentes', [UsuariosGenericController::class, 'getDocentes']);
-Route::delete('deleteUser/{idUser}', [UsuariosGenericController::class, 'destroy']);
-
-// | docentes
-Route::post('docentes', [DocentesController::class, 'insert']);
-Route::put('docentes/{id}', [DocentesController::class, 'update']);
+        // | docentes
+        Route::post('docentes', [DocentesController::class, 'insert'])->middleware('restrictRole:Administrador');
+        Route::put('docentes/{id}', [DocentesController::class, 'update'])->middleware('restrictRole:Administrador');
 
 
-//| alumnos
-Route::post('alumnos', [AlumnosController::class, 'insert']);
-Route::put('alumnos/{id}', [AlumnosController::class, 'update']);
+        //| alumno->middleware('restrictRole:Administrador');
+        Route::post('alumnos', [AlumnosController::class, 'insert'])->middleware('restrictRole:Administrador');
+        Route::put('alumnos/{id}', [AlumnosController::class, 'update'])->middleware('restrictRole:Administrador');
 
-// |usuarios
-Route::post('usuarios', [UsuariosController::class, 'insert']);
-Route::put('usuarios/{id}', [UsuariosController::class, 'update']);
-
-
-// | asignaturas 
-Route::get('asignaturas', [AsignaturasController::class, 'show']);
-Route::get('getAsignatura/{id}', [AsignaturasController::class, 'getAsignatura']);
-Route::post('asignaturas', [AsignaturasController::class, 'insert']);
-Route::put('asignaturas/{id}', [AsignaturasController::class, 'update']);
-Route::delete('asignaturas/{id}', [AsignaturasController::class, 'destroy']);
-Route::post('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'insert']);
-Route::get('asignaturadocentegrupo/{id_asignatura}', [AsignaturasDocentesGruposController::class, 'show']);
-Route::put('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'update']);
-
-// | sexos
-Route::get('sexos', [SexosController::class, 'show']);
-
-// | roles
-Route::get('roles', [RolesController::class, 'show']);
-
-// | periodos
-Route::get('periodos', [PeriodosEscolaresController::class, 'show']);
-Route::get('getPeriodo/{id}', [PeriodosEscolaresController::class, 'getPeriodo']);
-Route::post('periodos', [PeriodosEscolaresController::class, 'insert']);
-Route::put('periodos/{id}', [PeriodosEscolaresController::class, 'update']);
-Route::delete('periodos/{id}', [PeriodosEscolaresController::class, 'destroy']);
-
-// | grupos
-Route::get('grupos', [GruposController::class, 'show']);
-Route::post('grupos', [GruposController::class, 'insert']);
-Route::put('grupos/{id}', [GruposController::class, 'update']);
-Route::delete('grupos/{id}', [GruposController::class, 'destroy']);
+        // |usuario->middleware('restrictRole:Administrador');
+        Route::post('usuarios', [UsuariosController::class, 'insert'])->middleware('restrictRole:Administrador');
+        Route::put('usuarios/{id}', [UsuariosController::class, 'update'])->middleware('restrictRole:Administrador');
 
 
-Route::get('momentos', [MomentosController::class, 'show']);
-Route::get('seguimientos', [SeguimientosIndividualesController::class, 'show']);
-Route::get('periodocalificaciones', [PeriodoEvaluacionesController::class, 'show']);
+        // | asignaturas->middleware('restrictRole:Administrador');
+        Route::get('asignaturas', [AsignaturasController::class, 'show'])->middleware('restrictRole:Administrador');
+        Route::get('getAsignatura/{id}', [AsignaturasController::class, 'getAsignatura'])->middleware('restrictRole:Administrador');
+        Route::post('asignaturas', [AsignaturasController::class, 'insert'])->middleware('restrictRole:Administrador');
+        Route::put('asignaturas/{id}', [AsignaturasController::class, 'update'])->middleware('restrictRole:Administrador');
+        Route::delete('asignaturas/{id}', [AsignaturasController::class, 'destroy'])->middleware('restrictRole:Administrador');
+        Route::post('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'insert'])->middleware('restrictRole:Administrador');
+        Route::get('asignaturadocentegrupo/{id_asignatura}', [AsignaturasDocentesGruposController::class, 'show'])->middleware('restrictRole:Administrador');
+        Route::put('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'update'])->middleware('restrictRole:Administrador');
+
+
+        // | sexos
+        Route::get('sexos', [SexosController::class, 'show'])->middleware('restrictRole:Administrador');
+
+
+        // | roles
+        Route::get('roles', [RolesController::class, 'show'])->middleware('restrictRole:Administrador');
+
+
+        // | periodos
+        Route::get('periodos', [PeriodosEscolaresController::class, 'show'])->middleware('restrictRole:Administrador');;
+        Route::get('getPeriodo/{id}', [PeriodosEscolaresController::class, 'getPeriodo'])->middleware('restrictRole:Administrador');;
+        Route::post('periodos', [PeriodosEscolaresController::class, 'insert'])->middleware('restrictRole:Administrador');;
+        Route::put('periodos/{id}', [PeriodosEscolaresController::class, 'update'])->middleware('restrictRole:Administrador');;
+        Route::delete('periodos/{id}', [PeriodosEscolaresController::class, 'destroy'])->middleware('restrictRole:Administrador');;
+
+
+        // | grupos
+        Route::get('grupos', [GruposController::class, 'show'])->middleware('restrictRole:Administrador');;
+        Route::post('grupos', [GruposController::class, 'insert'])->middleware('restrictRole:Administrador');;
+        Route::put('grupos/{id}', [GruposController::class, 'update'])->middleware('restrictRole:Administrador');;
+        Route::delete('grupos/{id}', [GruposController::class, 'destroy'])->middleware('restrictRole:Administrador');;
+
+
+        Route::get('momentos', [MomentosController::class, 'show']);
+        Route::get('seguimientos', [SeguimientosIndividualesController::class, 'show']);
+        Route::get('periodocalificaciones', [PeriodoEvaluacionesController::class, 'show']);
+
+        // !cerrar sesion
+        //cerrar sesión
+        Route::get('logout', [AuthController::class, 'logout']);
+    }
+);
+
