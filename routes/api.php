@@ -6,6 +6,7 @@ use App\Http\Controllers\AsignaturasDocentesGruposController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocentesController;
 use App\Http\Controllers\GruposController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MomentosController;
 use App\Http\Controllers\PeriodoEvaluacionesController;
 use App\Http\Controllers\PeriodosEscolaresController;
@@ -23,6 +24,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(
     function () {
         //> rol Administrador
+    
+        // | inicio
+        Route::get('getInformationRelevant', [InicioController::class, 'getInformationRelevant'])->middleware('restrictRole:Administrador');
 
         //| informacion general de usuarios usando vista
         Route::get('getUsuarios', [UsuariosGenericController::class, 'show'])->middleware('restrictRole:Administrador');
@@ -55,11 +59,10 @@ Route::middleware(['auth:sanctum'])->group(
         Route::post('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'insert'])->middleware('restrictRole:Administrador');
         Route::get('asignaturadocentegrupo/{id_asignatura}', [AsignaturasDocentesGruposController::class, 'show'])->middleware('restrictRole:Administrador');
         Route::put('asignaturadocentegrupo', [AsignaturasDocentesGruposController::class, 'update'])->middleware('restrictRole:Administrador');
-        
+
 
         // | sexos
         Route::get('sexos', [SexosController::class, 'show'])->middleware('restrictRole:Administrador');
-
 
         // | roles
         Route::get('roles', [RolesController::class, 'show'])->middleware('restrictRole:Administrador');
@@ -83,9 +86,9 @@ Route::middleware(['auth:sanctum'])->group(
         // | periodos de calificaciones
         Route::get('periodocalificaciones', [PeriodoEvaluacionesController::class, 'show']);
 
-        
-        //> rol Docente
 
+        //> rol Docente
+    
         // | asignaturas impartidas por docentes
         Route::get('getMattersByDocent/{id}', [AsignaturasDocentesGruposController::class, 'getMattersByDocent'])->middleware('restrictRole:Docente');
 
@@ -98,20 +101,19 @@ Route::middleware(['auth:sanctum'])->group(
         // | obtener calificaciones de alumnos de momentos en una materia grupo y prefijo de grupo
         Route::get('getMomentosBySubjectGroupPeriod/{id_asignatura}/{num_period}/{pref_grupo}', [AlumnosController::class, 'getMomentosBySubjectGroupPeriod'])->middleware('restrictRole:Docente');
 
+        // | seguimientos individuales
+        // obtener todos los seguimientos
+        Route::get('seguimientos', [SeguimientosIndividualesController::class, 'show'])->middleware('restrictRole:Docente');
+        // obtener el seguimiento de un estudiante en especifico en una materia
+        Route::get('seguimiento/{num_control}/{id_asignatura}', [SeguimientosIndividualesController::class, 'getSeguimientoByStudentControl'])->middleware('restrictRole:Docente');
+        // crear seguimiento de un estudiante en una materia
+        Route::post('seguimientos/{num_control}/{id_asignatura}/{id_user}', [SeguimientosIndividualesController::class, 'insert'])->middleware('restrictRole:Docente');
+        // actualizar un seguimiento
+        Route::put('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'update'])->middleware('restrictRole:Docente');
+        // eliminar un seguimiento
+        Route::delete('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'destroy'])->middleware('restrictRole:Docente');
+
         //: cerrar sesion
         Route::get('logout', [AuthController::class, 'logout']);
     }
 );
-
-
-// | seguimientos individuales
-        // obtener todos los seguimientos
-        Route::get('seguimientos', [SeguimientosIndividualesController::class, 'show']);
-        // obtener el seguimiento de un estudiante en especifico en una materia
-        Route::get('seguimiento/{num_control}/{id_asignatura}', [SeguimientosIndividualesController::class, 'getSeguimientoByStudentControl']);
-        // crear seguimiento de un estudiante en una materia
-        Route::post('seguimientos/{num_control}/{id_asignatura}/{id_user}', [SeguimientosIndividualesController::class, 'insert']);
-        // actualizar un seguimiento
-        Route::put('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'update']);
-        // eliminar un seguimiento
-        Route::delete('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'destroy']);
