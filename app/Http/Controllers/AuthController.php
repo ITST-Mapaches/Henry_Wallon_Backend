@@ -36,7 +36,7 @@ class AuthController
         if (!Auth::attempt($request->only('nombre_usuario', 'password'))) {
             return response()->json([
                 'status' => 401,
-                'errors' => 'Usuario y/o contraseña incorrecto',
+                'message' => 'Usuario y/o contraseña incorrectos!',
             ], 401);
         }
 
@@ -46,10 +46,9 @@ class AuthController
 
         if ($user->activo == 0) {
             return response()->json([
-                'status' => 200,
-                'acceso' => false,
-                'message' => 'Tu cuenta esta inactiva, comunicate con tu administrador'
-            ], 200);
+                'status' => 401,
+                'message' => 'Tu cuenta esta inactiva, comunicate con tu administrador!'
+            ], 401);
         }
 
         // obtiene al usuario de la tabla general Usuarios

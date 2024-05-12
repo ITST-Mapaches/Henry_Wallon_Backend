@@ -112,4 +112,31 @@ class AsignaturasDocentesGruposController
         }
     }
 
+    //| funcion para obtener las materias que imparte un docente y el grupo en que la da
+    function getMattersByDocent($id_user)
+    {
+        $resultado = AsignaturasDocentesGrupos::select('asignaturas.id','asignaturas.clave', 'asignaturas.nombre as asignatura','periodos_escolares.numero as periodo' ,'grupos.prefijo as grupo')
+            ->join('asignaturas', 'asignaturas.id', '=', 'asignaturas_docentes_grupos.id_asignatura')
+            ->join('periodos_escolares', 'periodos_escolares.id', '=', 'asignaturas.id_periodo')
+            ->join('docentes', 'docentes.id', '=', 'asignaturas_docentes_grupos.id_docente')
+            ->join('usuarios', 'usuarios.id', '=', 'docentes.id_usuario')
+            ->join('grupos', 'grupos.id', '=', 'asignaturas_docentes_grupos.id_grupo')
+            ->where('docentes.id_usuario', $id_user)
+            ->orderBy('asignatura', 'asc')
+            ->get();
+
+        if (count($resultado) <= 0) {
+            return response([
+                'status' => 200,
+                'message' => 'No se han encontrado registros',
+                'data' => []
+            ], 200);
+        }
+
+        return response([
+            'status' => 200,
+            'message' => 'registros encontrados con éxito',
+            'data' => $resultado
+        ], 200);
+    }
 }

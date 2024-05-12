@@ -23,16 +23,16 @@ class UsuariosFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => fake()->name,
-            'ap_paterno' => fake()->lastName(),
-            'ap_materno' => fake()->lastName(),
-            'nacimiento' => fake()->date(),
-            'telefono' => substr(uniqid(), 0, 12),
-            'nombre_usuario' => fake()->unique()->userName(),
-            'contrasena' => static::$password ??= Hash::make('password'),
-            'activo' => fake()->numberBetween(0, 1),
+            'nombre' => 'Humberto',
+            'ap_paterno' => 'De La Cruz',
+            'ap_materno' => 'Domínguez',
+            'nacimiento' => '2002-12-13',
+            'telefono' => '2311343979',
+            'nombre_usuario' => 'HumbertDz',
+            'contrasena' => Hash::make('h13h12h2002'),
+            'activo' => 1,
             'id_sexo' => Sexos::inRandomOrder()->first()->id,
-            'id_rol' => Roles::inRandomOrder()->first()->id,
+            'id_rol' => 1,
             'remember_token' => Str::random(10),
         ];
     }
