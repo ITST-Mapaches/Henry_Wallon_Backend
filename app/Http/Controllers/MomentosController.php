@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PeriodosEvaluaciones;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Alumnos;
@@ -63,6 +64,15 @@ class MomentosController
                 ],
                 400
             );
+        }
+
+        $activo =  $isActive = PeriodosEvaluaciones::first();
+
+        if($activo->activo === 0){
+            return response([
+                'status' => 404,
+                'message' => 'El periodo de evaluaciones de encuentra desactivado'
+            ], 404);
         }
 
         //obtiene

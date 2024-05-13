@@ -84,7 +84,7 @@ Route::middleware(['auth:sanctum'])->group(
 
 
         // | periodos de calificaciones
-        Route::get('periodocalificaciones', [PeriodoEvaluacionesController::class, 'show'])->middleware('restrictRole:Administrador');
+        Route::get('periodocalificaciones', [PeriodoEvaluacionesController::class, 'show']);
         Route::put('periodocalificaciones', [PeriodoEvaluacionesController::class, 'update'])->middleware('restrictRole:Administrador');
 
 
