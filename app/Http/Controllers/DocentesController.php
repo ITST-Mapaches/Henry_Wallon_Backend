@@ -58,7 +58,7 @@ class DocentesController
             $request->nacimiento,
             $request->telefono,
             $request->nombre_usuario,
-            static::$password ??= Hash::make($request->contrasena),
+            Hash::make($request->contrasena),
             $request->activo,
             $request->id_sexo,
             $request->cedula_prof,
@@ -127,7 +127,7 @@ class DocentesController
             $request->nacimiento,
             $request->telefono,
             $request->nombre_usuario,
-            $request->contrasena,
+            Hash::make($request->contrasena),
             $request->activo,
             $request->id_sexo,
             $request->cedula_prof
