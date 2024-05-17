@@ -8,6 +8,7 @@ use App\Http\Controllers\DocentesController;
 use App\Http\Controllers\GruposController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MomentosController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PeriodoEvaluacionesController;
 use App\Http\Controllers\PeriodosEscolaresController;
 use App\Http\Controllers\RolesController;
@@ -113,6 +114,10 @@ Route::middleware(['auth:sanctum'])->group(
         Route::put('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'update'])->middleware('restrictRole:Docente');
         // eliminar un seguimiento
         Route::delete('seguimientos/{seguimiento_id}', [SeguimientosIndividualesController::class, 'destroy'])->middleware('restrictRole:Docente');
+
+        // > usuarios
+        Route::get('getPDF/{id}', [PDFController::class, 'getBoleta']);
+        Route::get('getSeguimientos/{id}', [SeguimientosIndividualesController::class, 'getSeguimientos'])->middleware('restrictRole:Tutor');
 
         //: cerrar sesion
         Route::get('logout', [AuthController::class, 'logout']);

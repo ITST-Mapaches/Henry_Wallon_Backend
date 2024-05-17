@@ -8,6 +8,7 @@ use App\Models\Docentes;
 use App\Models\SeguimientosIndividuales;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class SeguimientosIndividualesController
 {
@@ -254,6 +255,38 @@ class SeguimientosIndividualesController
             'status' => 200,
             'message' => 'Se ha eliminado el seguimiento exitosamente',
             'data' => []
+        ], 200);
+    }
+
+    // | funcion para obtener los sqguimientos individuales de alumnos
+    // | tutorados de un tutor
+    public function getSeguimientos($id_tutor)
+    {
+        // establece el query
+        $query = "
+                SELECT
+                u.id AS id_usuario,
+                a.id AS id_alumno,
+                CONCAT(u.nombre, ' ', u.ap_paterno, ' ', u.ap_materno) as nombre_alumno,
+                COALESCE(JSON_ARRAYAGG(JSON_OBJECT('asignatura', asig.nombre, 'detalle', si.descripcion)), '[]') AS seguimientos
+            FROM
+                usuarios u
+                    JOIN alumnos a ON u.id = a.id_usuario
+                    LEFT JOIN seguimientos_individuales si ON a.id = si.id_alumno
+                    LEFT JOIN asignaturas asig ON si.id_asignatura = asig.id
+            WHERE
+                a.id_usuario_tutor = ?
+            GROUP BY
+                u.id, a.id, nombre_alumno;";
+
+        // realiza el query
+        $seguimientos = DB::select($query, [$id_tutor]);
+
+        // respuesta de exito
+        return response()->json([
+            'status' => 200,
+            'message' => 'Se han encontrado los seguimientos exitosamente',
+            'data' => $seguimientos
         ], 200);
     }
 }
