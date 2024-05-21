@@ -13,7 +13,7 @@ return new class extends Migration
     public function up()
     {
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `add_new_Docente`(name VARCHAR(40), pat VARCHAR(40), mat VARCHAR(40), nac DATE, phone VARCHAR(12),
-                                 usname VARCHAR(40), pass VARCHAR(200), active BOOLEAN, sex INT, cedula VARCHAR(20))
+                                 usname VARCHAR(40), pass VARCHAR(200), active BOOLEAN, sex INT, cedula VARCHAR(20), token VARCHAR(100))
 BEGIN
 
     DECLARE id_user INT;
@@ -33,7 +33,7 @@ BEGIN
 
     INSERT INTO usuarios(nombre, ap_paterno, ap_materno, nacimiento, telefono, nombre_usuario, contrasena, activo,
                          id_sexo, id_rol, remember_token)
-    VALUES (name, pat, mat, nac, phone, usname,  LEFT(SHA2(pass, 256), 200), active, sex, rol_id, LEFT(UUID(), 100));
+    VALUES (name, pat, mat, nac, phone, usname, pass, active, sex, rol_id, token);
 
     SET id_user = LAST_INSERT_ID();
 
@@ -42,10 +42,9 @@ BEGIN
 
     SET id_docent = LAST_INSERT_ID();
 
-    SELECT d.id, u.nombre
-    FROM usuarios u
-             JOIN docentes d ON u.id = d.id_usuario
-    WHERE d.id = id_docent;
+    SELECT id, nombre
+    FROM usuarios
+    WHERE id = id_user;
     COMMIT;
 
     set autocommit = true;

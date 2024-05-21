@@ -12,9 +12,9 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `update_Docente`(id_doc INT, name VARCHAR(40), pat VARCHAR(40), mat VARCHAR(40), nac DATE,
+        DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `update_Student`(id_userr INT, name VARCHAR(40), pat VARCHAR(40), mat VARCHAR(40), nac DATE,
                                 phone VARCHAR(12),
-                                usname VARCHAR(40), pass VARCHAR(200), active BOOLEAN, sex INT, cedula VARCHAR(20))
+                                usname VARCHAR(40), pass VARCHAR(200), active BOOLEAN, sex INT, nume_control VARCHAR(15), tutor INT, period INT, grup INT)
 BEGIN
 
     DECLARE id_user INT;
@@ -28,7 +28,7 @@ BEGIN
     START TRANSACTION;
     set autocommit = false;
 
-    SELECT id_usuario INTO id_user FROM docentes WHERE id = id_doc;
+    SELECT id INTO id_user FROM usuarios WHERE id = id_userr;
 
     UPDATE usuarios
     SET nombre         = name,
@@ -37,20 +37,19 @@ BEGIN
         nacimiento     = nac,
         telefono       = phone,
         nombre_usuario = usname,
-        contrasena     =  LEFT(SHA2(pass, 256), 200),
+        contrasena     = pass,
         activo         = active,
-        id_sexo        = sex,
-        remember_token = LEFT(UUID(), 100)
+        id_sexo        = sex
     where id = id_user;
 
-    update docentes
-    set cedula_prof = cedula
+    update alumnos
+    set num_control = nume_control,
+        id_usuario_tutor = tutor,
+        id_periodo = period,
+        id_grupo = grup
     where id_usuario = id_user;
 
-    SELECT d.id, u.nombre
-    FROM usuarios u
-             JOIN docentes d ON u.id = d.id_usuario
-    WHERE d.id_usuario = id_user;
+    SELECT id, nombre from usuarios where  id = id_user;
     COMMIT;
 
     set autocommit = true;
@@ -64,6 +63,6 @@ END");
      */
     public function down()
     {
-        DB::unprepared("DROP PROCEDURE IF EXISTS update_Docente");
+        DB::unprepared("DROP PROCEDURE IF EXISTS update_Student");
     }
 };
