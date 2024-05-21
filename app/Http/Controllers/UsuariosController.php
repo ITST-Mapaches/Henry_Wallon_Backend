@@ -85,7 +85,7 @@ class UsuariosController
             'nacimiento' => $request->nacimiento,
             'telefono' => $request->telefono,
             'nombre_usuario' => $request->nombre_usuario,
-            'contrasena' => static::$password ??= Hash::make($request->contrasena),
+            'contrasena' => Hash::make($request->contrasena),
             'activo' => $request->activo,
             'id_sexo' => $request->id_sexo,
             'id_rol' => $request->id_rol,
@@ -147,6 +147,9 @@ class UsuariosController
             );
         }
 
+        // verifica si la contrasena cambio
+        $password = $request->contrasena === $user->contrasena ? $user->contrasena : Hash::make($request->contrasena);
+
         $data = [
             'nombre' => $request->nombre,
             'ap_paterno' => $request->ap_paterno,
@@ -154,7 +157,7 @@ class UsuariosController
             'nacimiento' => $request->nacimiento,
             'telefono' => $request->telefono,
             'nombre_usuario' => $request->nombre_usuario,
-            'contrasena' => static::$password ??= Hash::make($request->contrasena),
+            'contrasena' => $password,
             'activo' => $request->activo,
             'id_sexo' => $request->id_sexo,
             'id_rol' => $request->id_rol,
@@ -179,6 +182,5 @@ class UsuariosController
                 400
             );
         }
-
     }
 }

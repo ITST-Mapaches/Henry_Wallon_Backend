@@ -44,7 +44,7 @@ class AsignaturasController
         return validator::make($request->all(), [
             'clave' => 'required|string|max:10',
             'nombre' => 'required|string|max:50',
-            'objetivo' => 'required|string|max:1000',
+            'objetivo' => 'required|string|max:64000',
             'id_periodo' => 'required|int',
             'calificacion_aprobatoria' => 'required|int'
         ]);
